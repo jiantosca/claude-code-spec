@@ -20,6 +20,12 @@ For each task include:
 - `_Requirements:_` the requirement IDs it implements (full-spec mode only)
 - `_Depends:_` task numbers it depends on (blank if independent)
 
+For larger features (or when requirements opted into phased delivery), group tasks
+into **phases** — each a working, independently testable slice (own tests,
+shippable on its own). Mark each phase boundary with a `_Boundary:_ <phase name>`
+line; keep `_Depends:_` for ordering within and across phases. Small features stay
+a flat list.
+
 Use `- [ ]` checkboxes. Keep tasks small enough to review in one sitting.
 STOP and show me before any implementation.
 

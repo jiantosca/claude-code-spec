@@ -187,6 +187,45 @@ That's the entire Kiro methodology, reproduced and owned. Commit
 `.claude/commands/` and `docs/specs/` and the whole team is in sync — both the
 *method* (commands) and the *specs* travel in git.
 
+### Why roll our own vs. adopt cc-sdd
+
+The honest case for Path B over just running `npx cc-sdd@latest` and customizing
+what it generates:
+
+- **Small surface area, fully understood.** The kit is ~4 command files plus a
+  CLAUDE.md block — short enough that every team member can read and reason about
+  the whole thing. cc-sdd installs ~17 commands implementing the full Kiro
+  pipeline; most teams use a fraction of it and inherit the rest as opaque
+  behavior.
+- **No upstream to track.** A hand-written kit has no version, no breaking
+  changes, no `npx` step in onboarding, and no third-party prompt updates silently
+  changing how your specs get generated. The cost is that *you* own maintenance —
+  but for ~4 files that rarely change, that's near zero, and it's maintenance you'd
+  effectively take on anyway the moment you customized cc-sdd's commands.
+- **The "just fork cc-sdd" rebuttal.** Editing cc-sdd's commands does give you
+  ownership — but you start from 17 files of someone else's conventions and edit
+  *down/around* them, versus starting from a 4-file skeleton you wrote and edit
+  *up*. For a team that wants its own standards, authoring the small version is
+  less total work than understanding-then-pruning the large one, and the result is
+  prompts written in your team's voice rather than inherited.
+- **Git-committed, team-reviewable specs are the real point.** This is the kit's
+  durable edge over *both* cc-sdd's heavier machinery and native Tasks (which is
+  machine-local and never uploaded). What we actually care about is the file
+  convention + the review workflow, and that's small to own outright.
+
+**The trade-off we're accepting (the con):** cc-sdd keeps its spec files
+**Kiro-compatible**, so specs stay portable between Kiro and Claude Code. Rolling
+our own forfeits that interop — if anyone on the team still runs Kiro and wants to
+move specs back and forth, Path A is the better fit. We're betting that
+portability-to-Kiro isn't a requirement worth ~17 files of dependency for. If that
+bet is wrong, adopt cc-sdd instead.
+
+**Net:** adopt cc-sdd if you value the full battle-tested pipeline and Kiro
+portability out of the box; roll your own (this kit) if you value a small, owned,
+dependency-free surface and your own conventions more than those. We chose the
+latter. Either way, running cc-sdd once in a throwaway repo to borrow ideas is
+worthwhile (see Recommendation).
+
 ---
 
 ## 4. The execution model specifically

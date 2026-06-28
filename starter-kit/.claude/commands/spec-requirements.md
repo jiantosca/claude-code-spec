@@ -18,9 +18,14 @@ questions you genuinely need answered — use the AskUserQuestion tool (batch
 related questions; don't drip them one at a time). Focus only on things that
 change **which requirements exist**:
 
-- scope / MVP boundaries — what's in this build vs. deferred to a later one
+- scope / MVP boundaries — what's truly in scope. If the feature is large, prefer
+  **"keep all requirements but build in phases"** over cutting scope; only drop
+  requirements if I actually want them gone.
 - ambiguous, missing, or conflicting behavior
 - anything I flagged as an open question or said I'm "open to suggestions" on
+
+Feel free to surface relevant options I didn't ask for (a useful capability the
+prompt implies but doesn't mention) — propose them, don't silently assume.
 
 Do NOT ask about pure "how" choices (libraries, algorithms, file formats,
 storage mechanism) — those belong to `/spec-design`; capture them as open
@@ -36,10 +41,17 @@ Cover the happy path, edge cases, and error handling. Number every requirement
 (R1, R2, …) so design and tasks can reference them. Park genuine "how" decisions
 in an **Open questions (for design)** section rather than inventing answers.
 
+IF I opted into phased delivery, add a one-line **Delivery notes** entry (e.g.
+"Built in independently-testable phases") so `/spec-design` knows to leave clean
+phase seams. Otherwise omit it — do NOT phase the requirements themselves; they
+stay complete and unordered.
+
 ## 3. Iterate to approval
 
-Show me the file and refine it with me until I **explicitly approve**. Do NOT
-create `design.md` or `tasks.md` yourself, and do not start implementing.
+Show me the file and explicitly ask whether it's the complete and correct set —
+anything missing, wrong, or unwanted — then refine with me until I **explicitly
+approve**. Do NOT create `design.md` or `tasks.md` yourself, and do not start
+implementing.
 
 ## 4. Hand off
 

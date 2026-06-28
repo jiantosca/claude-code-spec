@@ -26,6 +26,10 @@ can see the target output. **Delete that folder** before real use.
 Already use Kiro at work? See `MIGRATING-FROM-KIRO.md` for a side-by-side and the
 behavioral differences to watch for.
 
+Wondering why this hand-written kit instead of an off-the-shelf tool like
+`cc-sdd`? See "Why roll our own vs. adopt cc-sdd" in
+`../kiro-spec-driven-dev-in-claude-code.md`.
+
 ## Sharing across projects & your team
 
 Copying works, but you don't have to. The `/spec-*` commands encode a *process*
