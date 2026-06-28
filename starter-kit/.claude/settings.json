@@ -1,0 +1,25 @@
+{
+  "_comment": "Two non-blocking hooks. SessionStart: if spec-workflow.md exists but CLAUDE.md doesn't @import it (a half-install), show a visible systemMessage warning. Stop: remind to tick task checkboxes. Delete either entry, or the whole \"hooks\" block, to remove them. To make the workflow strict instead, see README.md.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh -c 'f=.claude/spec-workflow.md; if [ -f \"$f\" ] && ! grep -q \"@.claude/spec-workflow.md\" CLAUDE.md 2>/dev/null; then printf \"%s\" \"{\\\"systemMessage\\\": \\\"Spec kit half-installed: .claude/spec-workflow.md exists but CLAUDE.md does not @import it. The /spec-* commands still work, but the workflow guardrails and right-sizing guidance are inactive. Add this line to CLAUDE.md: @.claude/spec-workflow.md\\\", \\\"suppressOutput\\\": true}\"; fi'"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Spec reminder: if you implemented a task, mark it [x] in .claude/specs/<feature>/tasks.md before moving on.'"
+          }
+        ]
+      }
+    ]
+  }
+}
