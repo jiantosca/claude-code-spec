@@ -22,3 +22,7 @@ For each task include:
 
 Use `- [ ]` checkboxes. Keep tasks small enough to review in one sitting.
 STOP and show me before any implementation.
+
+Once I approve, prompt me to run the next phase:
+
+> Tasks approved. Next: `/spec-impl $1 1` (one task at a time) or `/spec-impl $1 all`.

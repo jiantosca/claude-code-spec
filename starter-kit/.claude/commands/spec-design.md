@@ -9,3 +9,7 @@ Read `.claude/specs/$1/requirements.md`. Create `.claude/specs/$1/design.md` wit
 - Each design decision tagged with the requirement IDs it satisfies
 
 STOP and show me. Do not generate tasks until I approve.
+
+Once I approve, prompt me to run the next phase:
+
+> Design approved. Next: `/spec-tasks $1`

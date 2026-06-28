@@ -31,6 +31,11 @@ Build a spec with these commands, approving each phase before the next:
 - `/spec-tasks <feature>` (adaptive: also works standalone with a description if
   there's no requirements/design)
 
+Each phase follows the same rhythm: **clarify open questions with the user before
+drafting** (ask the questions that change what gets written — don't draft on
+silent assumptions), produce the artifact, iterate to explicit approval, then
+point at the next command. Never skip ahead to the next phase unprompted.
+
 Implement it:
 
 - `/spec-impl <feature> <task#>` — one task at a time, stops for check-in
