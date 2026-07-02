@@ -18,6 +18,11 @@ from Kiro.
 The prose write-up: what Kiro actually does and how to replicate it in Claude
 Code. Read this to understand *why* the kit is built the way it is.
 
+### → [`spec-kit-comparison.md`](spec-kit-comparison.md) — how this differs from GitHub's spec-kit
+Findings on [github/spec-kit](https://github.com/github/spec-kit) (GitHub's
+agent-agnostic SDD toolkit) and a head-to-head against this kit: trade-offs,
+when to prefer which, and spec-kit ideas worth borrowing.
+
 ### → [`research-findings.md`](research-findings.md) — the raw notes
 The verified findings behind the guide (sources, confidence, caveats), preserved
 so they can be reused without re-running the original research.
