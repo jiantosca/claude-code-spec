@@ -10,5 +10,8 @@ The requirements for `$1` have changed. Reconcile the downstream artifacts under
 3. Update tasks.md: add tasks for new/changed requirements, flag tasks that are
    now obsolete (don't silently delete completed work — mark them `~~struck~~`
    with a one-line reason).
+4. Consistency pass: re-verify internal cross-references in both files still
+   resolve (requirement IDs exist in requirements.md; any section references
+   point at the section they name) — editing is when these go stale.
 
 Show me a summary of what changed in each file. STOP before implementing anything.
