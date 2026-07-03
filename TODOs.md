@@ -77,3 +77,73 @@ of auto-accept. (Hit this for real while building passwords-py: every
       no longer prompts.
 
 ---
+
+## Spike: Package the spec kit as a Claude Code plugin
+
+### Problem
+
+Installing the kit today means copying files into each repo (and passwords-py
+already drifted once — the `.claude/specs` → `specs/` move had to be applied in
+two places). The starter-kit README already recommends graduating to a plugin
+for "one versioned source of truth across many repos" — this spike figures out
+what that actually takes.
+
+The sharp edge: **`settings.json` doesn't transplant**. The five commands and
+`spec-workflow.md` are all `spec`-prefixed files that drop in cleanly, but a
+target repo may already have its own `.claude/settings.json`, so the kit's two
+hooks (SessionStart half-install warning, Stop checkbox reminder) can't just be
+copied — they'd clobber or have to be hand-merged.
+
+### Questions to answer
+
+- Plugin anatomy: what goes in `.claude-plugin/plugin.json`, how do bundled
+  commands get namespaced (`/spec-kit:spec-tasks`?), and does that break the
+  muscle-memory `/spec-*` names?
+- **Can a plugin ship hooks?** If plugins can contribute hooks without touching
+  the host repo's `settings.json`, the transplant problem disappears — verify
+  this and how conflicts/ordering work. If not, decide: drop the hooks from the
+  plugin, or document a manual merge step.
+- Where does `spec-workflow.md` guidance land — can a plugin inject CLAUDE.md
+  guidance (skill? auto-loaded context?), or does the host repo still need the
+  one-line `@import`?
+- Distribution: `/plugin marketplace add <org/repo>` from a private GitHub repo
+  — what's the minimal setup, and how do updates roll out?
+- The specs themselves (`specs/<feature>/`) stay per-repo — confirm nothing in
+  the plugin model fights that.
+
+### Outcome
+
+A short write-up (or ADR) with a go/no-go: what the plugin would contain, what
+stays repo-local, and the migration path for passwords-py. No implementation.
+
+---
+
+## Spike: Is the `spec-` command prefix already taken?
+
+### Problem
+
+The kit's public surface is five slash commands named `/spec-requirements`,
+`/spec-design`, `/spec-tasks`, `/spec-impl`, `/spec-sync`. Other open-source
+spec-driven-development tooling exists (GitHub's spec-kit, cc-sdd's `/kiro-*`
+commands, angelsen/claude-kiro, etc.) and more keeps appearing. If a popular
+tool claims the same `spec-` command names, installing both in one repo would
+collide — and even without a literal collision, sharing a prefix with a
+well-known tool invites confusion about whose workflow is running.
+
+### Questions to answer
+
+- Survey the known SDD tools for Claude Code (spec-kit, cc-sdd, claude-kiro,
+  anything newer): what slash-command names do they install?
+- Does anything ship commands literally named `spec-*`? If yes, which ones
+  overlap with ours?
+- How does Claude Code resolve duplicate command names (repo vs. user vs.
+  plugin, plugin namespacing) — is a collision an error, a shadow, or a pick?
+- If there IS a clash: is renaming ours worth it, or does plugin namespacing
+  (`/spec-kit:spec-tasks`) make it moot? (Feeds the plugin spike above.)
+
+### Outcome
+
+A short note in this file (or the plugin ADR): list of surveyed tools and their
+command names, collision verdict, and a keep/rename recommendation.
+
+---
