@@ -22,7 +22,7 @@ Kiro's phase **buttons** become **slash commands**, Kiro's **steering** becomes
 | Click **Run all Tasks** | `/spec-impl <feature> all` |
 | Edit requirements, Kiro re-syncs design/tasks | `/spec-sync <feature>` |
 | Rely on steering files for project rules | Put rules in `CLAUDE.md` |
-| Find specs in `.kiro/specs/<feature>/` | Find them in `.claude/specs/<feature>/` |
+| Find specs in `.kiro/specs/<feature>/` | Find them in `specs/<feature>/` |
 
 ## Behavioral differences worth knowing
 
@@ -43,10 +43,14 @@ surprises you.
    one-task-at-a-time (`/spec-impl <feature> <n>`) — which is how Kiro worked
    originally, and by design.
 
-3. **Specs live under `.claude/specs/`, not `.kiro/specs/`.** A deliberate choice
-   to keep all Claude Code artifacts together. If you want byte-compatibility with
-   Kiro specs (e.g. to open the same files in both tools), change the path in the
-   five command files and in `.claude/spec-workflow.md` to `.kiro/specs/`.
+3. **Specs live in a top-level `specs/`, not `.kiro/specs/`.** A deliberate
+   choice: Claude Code guards everything under `.claude/` with a permission
+   prompt (so a model can't quietly rewrite its own config), and a dotted
+   directory would hit the same friction during `/spec-impl` checkbox edits —
+   plus `specs/` is more discoverable in PRs. If you want byte-compatibility
+   with Kiro specs (e.g. to open the same files in both tools), change the path
+   to `.kiro/specs/` in the five command files, `.claude/spec-workflow.md`, and
+   the `Stop` hook in `.claude/settings.json`.
 
 4. **EARS is convention, not a feature.** The `WHEN … THE SYSTEM SHALL …` format
    is enforced by the requirements command's prompt — nothing technical depends on
@@ -102,6 +106,6 @@ tasks.
 ## See also
 
 - `README.md` — install and full command reference
-- `.claude/specs/example-feature/` — a complete worked example (dark-mode toggle)
+- `specs/example-feature/` — a complete worked example (dark-mode toggle)
 - `.claude/spec-workflow.md` — the workflow rules Claude follows in every session
   (imported by `CLAUDE.md`)

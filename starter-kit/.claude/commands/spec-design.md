@@ -2,7 +2,7 @@
 description: Phase 2 — technical design from approved requirements
 argument-hint: <feature-name>
 ---
-Read `.claude/specs/$1/requirements.md`. Create `.claude/specs/$1/design.md` with:
+Read `specs/$1/requirements.md`. Create `specs/$1/design.md` with:
 - Architecture overview + a Mermaid diagram
 - Components and their interactions, data models, interfaces
 - A File Structure Plan (which files change / are created)

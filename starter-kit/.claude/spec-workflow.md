@@ -17,7 +17,7 @@ do NOT travel in git. `tasks.md` is the committed, team-reviewable plan. Use bot
 
 ## Spec-driven development
 
-Features are specified before implementation, in `.claude/specs/<feature>/` as
+Features are specified before implementation, in `specs/<feature>/` as
 three files produced in order:
 
 1. `requirements.md` — user stories + acceptance criteria in EARS notation

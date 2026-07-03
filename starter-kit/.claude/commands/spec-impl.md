@@ -2,7 +2,7 @@
 description: Implement spec tasks. Pass a task number for one-at-a-time, or "all".
 argument-hint: <feature-name> <task-number | all>
 ---
-Read `.claude/specs/$1/tasks.md`.
+Read `specs/$1/tasks.md`.
 
 Tip (Anthropic-recommended): for larger specs, run this in a FRESH session that
 hasn't been used to author the spec — a clean context that just reads the file

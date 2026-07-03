@@ -16,7 +16,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo 'Spec reminder: if you implemented a task, mark it [x] in .claude/specs/<feature>/tasks.md before moving on.'"
+            "command": "echo 'Spec reminder: if you implemented a task, mark it [x] in specs/<feature>/tasks.md before moving on.'"
           }
         ]
       }

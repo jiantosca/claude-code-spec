@@ -20,8 +20,12 @@ with a single `@.claude/spec-workflow.md` import. **Already have a `CLAUDE.md`?*
 Don't overwrite it — just add that one import line and drop in `spec-workflow.md`.
 Keep your own project rules in CLAUDE.md's "Project-specific guidance" section.
 
-`.claude/specs/example-feature/` is a worked example (a dark-mode toggle) so you
-can see the target output. **Delete that folder** before real use.
+Specs themselves are written to a top-level `specs/<feature>/` directory —
+deliberately *outside* `.claude/`, so Claude can edit them (e.g. ticking task
+checkboxes during `/spec-impl`) without tripping the permission prompt that
+guards `.claude/` config. `specs/example-feature/` here is a worked example (a
+dark-mode toggle) so you can see the target output; it lives outside `.claude/`,
+so copying `.claude/` into your repo won't drag it along.
 
 Already use Kiro at work? See `MIGRATING-FROM-KIRO.md` for a side-by-side and the
 behavioral differences to watch for.
@@ -54,7 +58,7 @@ more than one place, and graduate to a **plugin** when you want one versioned
 source of truth for the commands across many repos.
 
 Note: only the *commands and guidance* centralize this way. The spec artifacts
-themselves (`.claude/specs/<feature>/`) are intentionally per-project and
+themselves (`specs/<feature>/`) are intentionally per-project and
 committed to that repo — same as Kiro's `.kiro/specs/`.
 
 ## Workflow
@@ -120,7 +124,7 @@ the whole `"hooks"` block, to remove them):
   i.e. a half-install where the `/spec-*` commands work but the workflow
   guardrails and right-sizing guidance never load.
 - a **`Stop`** reminder that nudges you to tick task checkboxes in
-  `.claude/specs/<feature>/tasks.md` after implementing.
+  `specs/<feature>/tasks.md` after implementing.
 
 The `SessionStart` check assumes the default `.claude/spec-workflow.md` path. If
 you centralize the workflow elsewhere (e.g. `@~/.claude/spec-workflow.md` — see
@@ -141,7 +145,7 @@ Claude "make the spec hook blocking" and it can wire it for you.
 | Run task / Run all Tasks | `/spec-impl <n>` vs `/spec-impl all` |
 | Steering files | `CLAUDE.md` + `@import`ed `.claude/spec-workflow.md` |
 | Sync | `/spec-sync` |
-| Specs in the repo | `.claude/specs/<feature>/`, committed to git |
+| Specs in the repo | `specs/<feature>/`, committed to git |
 
 Everything is plain markdown + git — no special tooling, and the *method* itself
 travels in the repo so the whole team stays in sync.

@@ -2,12 +2,12 @@
 description: Phase 1 — generate EARS-format requirements for a feature
 argument-hint: <feature-name> <short description>
 ---
-Author `.claude/specs/$1/requirements.md` for the feature: $ARGUMENTS
+Author `specs/$1/requirements.md` for the feature: $ARGUMENTS
 
 The feature name is the first whitespace-delimited token of the arguments;
 everything after it is the description. If `$1` came through empty, parse the
 feature name yourself from the first token of $ARGUMENTS (don't write to a path
-with an empty segment like `.claude/specs//requirements.md`).
+with an empty segment like `specs//requirements.md`).
 
 Work through this in order — do NOT just create the file silently.
 

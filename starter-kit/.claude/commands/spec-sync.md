@@ -3,7 +3,7 @@ description: Re-sync design + tasks after editing requirements (Kiro-style "sync
 argument-hint: <feature-name>
 ---
 The requirements for `$1` have changed. Reconcile the downstream artifacts under
-`.claude/specs/$1/`:
+`specs/$1/`:
 
 1. Re-read requirements.md.
 2. Update design.md so it still satisfies every requirement ID. Note what changed.

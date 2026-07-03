@@ -2,10 +2,10 @@
 description: Break a feature into discrete, trackable tasks (uses spec docs if present)
 argument-hint: <feature-name> [description, if no spec docs exist]
 ---
-Create `.claude/specs/$1/tasks.md` as a numbered checklist.
+Create `specs/$1/tasks.md` as a numbered checklist.
 
-First check whether `.claude/specs/$1/requirements.md` and
-`.claude/specs/$1/design.md` exist:
+First check whether `specs/$1/requirements.md` and
+`specs/$1/design.md` exist:
 
 - If BOTH exist (full-spec mode): base the tasks on them, and tag each task with
   the requirement IDs it implements.
