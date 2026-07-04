@@ -2,12 +2,18 @@
 description: Phase 1 — generate EARS-format requirements for a feature
 argument-hint: <feature-name> <short description>
 ---
-Author `specs/$1/requirements.md` for the feature: $ARGUMENTS
+Arguments (feature name, then a short description):
 
-The feature name is the first whitespace-delimited token of the arguments;
-everything after it is the description. If `$1` came through empty, parse the
-feature name yourself from the first token of $ARGUMENTS (don't write to a path
-with an empty segment like `specs//requirements.md`).
+```text
+$ARGUMENTS
+```
+
+The first whitespace-delimited token above is the feature name — `<feature>` in
+what follows; everything after it is the description. If the block is empty,
+stop and ask for the feature name — never write to a path with an empty
+segment like `specs//requirements.md`.
+
+Author `specs/<feature>/requirements.md` for the described feature.
 
 Work through this in order — do NOT just create the file silently.
 
@@ -37,9 +43,41 @@ description is genuinely unambiguous and well-scoped, say so and skip to draftin
 Write user stories with acceptance criteria in EARS notation:
 `WHEN [condition/event] THE SYSTEM SHALL [expected behavior]`.
 
-Cover the happy path, edge cases, and error handling. Number every requirement
-(R1, R2, …) so design and tasks can reference them. Park genuine "how" decisions
-in an **Open questions (for design)** section rather than inventing answers.
+Cover the happy path, edge cases, and error handling. Structure the document
+exactly like this skeleton — story-scoped requirement IDs (`R<story>.<n>`) are
+what design and tasks cross-reference, and they let later insertions land as
+e.g. R3.9 without renumbering anything:
+
+```markdown
+# Requirements: <feature>
+
+## Overview
+One short paragraph: what this is and why.
+
+## Domain model (shared vocabulary)
+- **Term** — one-line definition, used consistently below.
+(Include only when the feature has domain nouns worth pinning down.)
+
+## R1. <Story title>
+**User story:** As a <user>, I want <capability>, so that <benefit>.
+- R1.1 — WHEN <condition> THE SYSTEM SHALL <behavior>.
+- R1.2 — ...
+
+## R2. <Next story>
+...
+
+## Non-functional / constraints
+- N1 — <cross-cutting constraint: tooling, style, security posture, ...>
+
+## Backlog / future (out of scope)
+(Only if scoping decisions parked things worth remembering.)
+
+## Open questions (for design)
+1. <genuine "how" decision parked for /spec-design>
+```
+
+Park genuine "how" decisions in the **Open questions (for design)** section
+rather than inventing answers.
 
 IF I opted into phased delivery, add a one-line **Delivery notes** entry (e.g.
 "Built in independently-testable phases") so `/spec-design` knows to leave clean
@@ -56,6 +94,6 @@ implementing.
 ## 4. Hand off
 
 Once I approve, state that the requirements are locked and prompt me to run the
-next phase:
+next phase (with the actual feature name filled in):
 
-> Requirements approved. Next: `/spec-design $1`
+> Requirements approved. Next: `/spec-design <feature>`

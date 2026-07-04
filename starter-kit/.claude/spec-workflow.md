@@ -40,6 +40,7 @@ Implement it:
 
 - `/spec-impl <feature> <task#>` — one task at a time, stops for check-in
 - `/spec-impl <feature> all` — all tasks, respecting dependencies
+- `/spec-impl <feature>` — no task number: proposes the next unchecked task, asks first
 
 If requirements change after design/tasks exist, run `/spec-sync <feature>`.
 
