@@ -32,7 +32,7 @@ behavioral differences to watch for.
 
 Wondering why this hand-written kit instead of an off-the-shelf tool like
 `cc-sdd`? See "Why roll our own vs. adopt cc-sdd" in
-`../kiro-spec-driven-dev-in-claude-code.md`.
+`../docs/kiro-spec-driven-dev-in-claude-code.md`.
 
 ## Sharing across projects & your team
 

@@ -21,8 +21,6 @@ picked up cold. Finished stories move to `TODOs-completed.md`.
   write-up.
 - [Should specs live somewhere other than top-level `specs/`?](#spike-should-specs-live-somewhere-other-than-top-level-specs)
   — weigh `specs/` vs `.claude.specs/` vs `docs/specs/`; recommendation only.
-- [Is the `spec-` command prefix already taken?](#spike-is-the-spec--command-prefix-already-taken)
-  — survey other SDD tools for command-name collisions; keep/rename verdict.
 
 ---
 
@@ -161,7 +159,10 @@ copied — they'd clobber or have to be hand-merged.
 
 - Plugin anatomy: what goes in `.claude-plugin/plugin.json`, how do bundled
   commands get namespaced (`/spec-kit:spec-tasks`?), and does that break the
-  muscle-memory `/spec-*` names?
+  muscle-memory `/spec-*` names? (Partially answered by the prefix-collision
+  spike, now in `TODOs-completed.md`: plugin commands are *always* invoked as
+  `/plugin-name:command` with no bare form, so yes — packaging as a plugin
+  gives up the bare `/spec-*` names.)
 - **Can a plugin ship hooks?** If plugins can contribute hooks without touching
   the host repo's `settings.json`, the transplant problem disappears — verify
   this and how conflicts/ordering work. If not, decide: drop the hooks from the
@@ -238,35 +239,5 @@ caused the original prompting pain.
 A short recommendation in this file: keep `specs/` or move (and to what), with
 the reasoning. If a move wins, write it up as a story mirroring the DONE one
 above. No implementation.
-
----
-
-## Spike: Is the `spec-` command prefix already taken?
-
-### Problem
-
-The kit's public surface is five slash commands named `/spec-requirements`,
-`/spec-design`, `/spec-tasks`, `/spec-impl`, `/spec-sync`. Other open-source
-spec-driven-development tooling exists (GitHub's spec-kit, cc-sdd's `/kiro-*`
-commands, angelsen/claude-kiro, etc.) and more keeps appearing. If a popular
-tool claims the same `spec-` command names, installing both in one repo would
-collide — and even without a literal collision, sharing a prefix with a
-well-known tool invites confusion about whose workflow is running.
-
-### Questions to answer
-
-- Survey the known SDD tools for Claude Code (spec-kit, cc-sdd, claude-kiro,
-  anything newer): what slash-command names do they install?
-- Does anything ship commands literally named `spec-*`? If yes, which ones
-  overlap with ours?
-- How does Claude Code resolve duplicate command names (repo vs. user vs.
-  plugin, plugin namespacing) — is a collision an error, a shadow, or a pick?
-- If there IS a clash: is renaming ours worth it, or does plugin namespacing
-  (`/spec-kit:spec-tasks`) make it moot? (Feeds the plugin spike above.)
-
-### Outcome
-
-A short note in this file (or the plugin ADR): list of surveyed tools and their
-command names, collision verdict, and a keep/rename recommendation.
 
 ---

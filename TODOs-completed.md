@@ -50,7 +50,8 @@ of auto-accept. (Hit this for real while building passwords-py: every
    - `starter-kit/.claude/commands/spec-sync.md`
    - `starter-kit/.claude/spec-workflow.md`
    - `starter-kit/README.md` and `starter-kit/MIGRATING-FROM-KIRO.md`
-   - `kiro-spec-driven-dev-in-claude-code.md` (narrative doc)
+   - `docs/kiro-spec-driven-dev-in-claude-code.md` (narrative doc; was at repo
+     root when this story was done)
 3. Add a short "migrating an existing project" note for repos already using
    `.claude/specs/`: `git mv .claude/specs specs` plus re-copying the updated
    commands (or a sed one-liner over `.claude/commands/spec-*.md`).
@@ -250,5 +251,73 @@ and rejected:
 - [x] ~~passwords-py's `.claude/commands/spec-*.md` updated to match~~
       (dropped by choice — passwords-py is being left as-is for now; the
       updated kit was exercised in the passwords-py-spec-test clone instead).
+
+---
+
+## Spike: Is the `spec-` command prefix already taken?
+
+**Status: DONE (2026-07-06).** Verdict: **keep the `/spec-*` names.** No active
+tool claims them; the only literal overlap comes from deprecated mid-2025
+releases of a now-dormant tool, and that shows up as a visible file conflict at
+install time, not silent misbehavior. Findings below.
+
+### Problem
+
+The kit's public surface is five slash commands named `/spec-requirements`,
+`/spec-design`, `/spec-tasks`, `/spec-impl`, `/spec-sync`. Other open-source
+spec-driven-development tooling exists (GitHub's spec-kit, cc-sdd's `/kiro-*`
+commands, angelsen/claude-kiro, etc.) and more keeps appearing. If a popular
+tool claims the same `spec-` command names, installing both in one repo would
+collide — and even without a literal collision, sharing a prefix with a
+well-known tool invites confusion about whose workflow is running.
+
+### Findings (2026-07-06)
+
+**Survey.** Eleven tools checked, command names verified from repo file trees
+(not blog summaries):
+
+| Tool (GitHub stars) | Commands installed | Flat `spec-` prefix? |
+|---|---|---|
+| [github/spec-kit](https://github.com/github/spec-kit) (~118k) | `/speckit.specify`, `/speckit.plan`, `/speckit.tasks`, `/speckit.implement`, `/speckit.analyze`, … | No — dot-prefixed since ~v0.0.50 (Sept–Oct 2025); earlier releases installed bare `/specify`, `/plan`, `/tasks` |
+| [Fission-AI/OpenSpec](https://github.com/Fission-AI/OpenSpec) (~59k) | `/opsx:propose`, `/opsx:apply`, `/opsx:sync`, … | No |
+| [bmad-code-org/BMAD-METHOD](https://github.com/bmad-code-org/BMAD-METHOD) (~50k) | installer-generated `/bmad:*` | No |
+| [gsd-build/get-shit-done](https://github.com/gsd-build/get-shit-done) (~23k) | `/gsd:new-project`, `/gsd:execute-phase`, … (newer skill form `/gsd-*`) | No |
+| [Pimzino/spec-workflow-mcp](https://github.com/Pimzino/spec-workflow-mcp) (~4.3k, active) | none — MCP server, no command files | No |
+| [Pimzino/claude-code-spec-workflow](https://github.com/Pimzino/claude-code-spec-workflow) (~3.8k, dormant since Sept 2025) | `/spec-create`, `/spec-execute`, `/spec-status`, `/spec-list`, `/spec-steering-setup`, `/bug-*`; **releases through ~July 2025 also installed literal `/spec-requirements`, `/spec-design`, `/spec-tasks`** | **Yes** — the only surveyed tool in our lexical space; old installs collide with 3 of our 5 names |
+| [gotalab/cc-sdd](https://github.com/gotalab/cc-sdd) (~3.5k, was `gotalab/claude-code-spec`) | `/kiro-spec-requirements`, `/kiro-spec-design`, `/kiro-spec-tasks`, `/kiro-impl`, … (legacy `/kiro:spec-*` still installable) | No — always `kiro`-namespaced, though 4 of our 5 suffixes match theirs |
+| [papaoloba/spec-based-claude-code](https://github.com/papaoloba/spec-based-claude-code) (133, inactive) | `/spec:requirements`, `/spec:design`, `/spec:tasks`, `/spec:implement`, … | No — colon namespace, one character from ours |
+| [angelsen/claude-kiro](https://github.com/angelsen/claude-kiro) (6) | `/spec:create`, `/spec:implement`, `/spec:review` | No |
+| [buildermethods/agent-os](https://github.com/buildermethods/agent-os) | `/agent-os:plan-product`, `/agent-os:shape-spec`, … | No |
+| [zircote/claude-spec](https://github.com/zircote/claude-spec) (plugin) | `/claude-spec:plan`, `/claude-spec:implement`, … | No |
+
+`/spec-impl` and `/spec-sync` are claimed by no surveyed tool, past or present.
+
+**Collision mechanics** (per the [skills](https://code.claude.com/docs/en/skills)
+and [plugins](https://code.claude.com/docs/en/plugins) docs): a duplicate name
+is never an error. Same-named commands at different scopes shadow
+(enterprise > personal > project), so the only *silent* risk is another tool
+installing a same-named **user-level** command over our project-level ones — and
+no surveyed tool installs to `~/.claude/commands/`. Plugin commands are always
+invoked as `/plugin-name:command` with no bare form, so plugin collisions are
+structurally impossible. And since both our kit and Pimzino's copy flat files
+into the repo's `.claude/commands/`, a stale-Pimzino "collision" is a
+same-filename conflict you see at copy time, not a runtime surprise.
+
+**Verdict: keep the names.** The only literal claimant is a dormant tool's
+deprecated releases, and the ecosystem has converged on namespaces (`speckit.`,
+`kiro:`, `opsx:`) precisely to vacate the flat space — spec-kit's own rename
+from `/specify` to `/speckit.*` shows the direction of travel. Renaming would
+trade real muscle-memory and doc churn for protection against a shrinking
+population of stale installs.
+
+Two notes feeding the plugin spike (in `TODOs.md`):
+
+- If the kit becomes a plugin, the commands become `/<plugin>:spec-requirements`
+  etc. with **no bare `/spec-*` form** — plugin packaging itself is what breaks
+  the muscle-memory names, a real con to weigh in that spike.
+- Cheap mitigation available now: the SessionStart half-install hook (or the
+  README install step) can flag pre-existing `spec-*.md` files in
+  `.claude/commands/` that don't match the kit's — catching stale
+  claude-code-spec-workflow installs exactly when they'd conflict.
 
 ---
